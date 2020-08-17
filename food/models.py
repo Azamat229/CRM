@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 class Table(models.Model):  # add, get all, delete
@@ -76,7 +77,7 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     roleid = models.ForeignKey(Role, on_delete=models.CASCADE)
-    dateofadd = models.DateField()
+    dateofadd = models.DateField(("Date"), default=datetime.date.today)
     phone = models.IntegerField(help_text="996559444345")
 
     def __str__(self):
@@ -198,7 +199,7 @@ class ServicePercentage(models.Model):
     percentage = models.IntegerField()
 
     def __str__(self):
-        return self.percentage
+        return str(self.percentage)
 
 
 # {
@@ -207,13 +208,12 @@ class ServicePercentage(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=50)
-    category = models.ForeignKey(MealCategory, on_delete=models.CASCADE)
+    categoryid = models.ForeignKey(MealCategory, on_delete=models.CASCADE)
     price = models.IntegerField()
-    description = models.CharField(help_text="option field", null=True)
+    description = models.CharField(help_text="option field", null=True, max_length=500)
 
     def __str__(self):
         return self.name
-
 
 # [
 #     {
@@ -238,23 +238,6 @@ class Meal(models.Model):
 #         "description": "dfghjkdfghjn" //optional
 #     }
 # ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # class MealsMealsByCategory(models.Model):
